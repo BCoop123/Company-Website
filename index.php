@@ -295,8 +295,15 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="mb-4">
-                            <h2 class="text-white-50 my-4">Starluxe Innovations Ltd.</h2>
-                            <p class="text-white-50 my-4">"To redefine boundaries, merge realities, and craft the unimaginable, propelling humanity towards a future where technology and dreams are indistinguishable."</p>
+                            <?php
+                                $footerData = readCSVData('./data/data3.csv');
+                                foreach ($footerData as $key => $footer) {
+                                    echo '
+                                    <h2 class="text-white-50 my-4">' . $footer[0] . '</h2>
+                                    <p class="text-white-50 my-4">' . $footer[1] . '</p>
+                                    ';
+                                }
+                            ?>   
                         </div>
                     </div>
                     <!-- end col -->
