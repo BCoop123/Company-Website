@@ -16,16 +16,4 @@ function readJsonData($filePath) {
 
     return $jsonData;
 }
-
-// Example usage:
-$jsonFilePath = 'data/data.json';
-$data = readJsonData($jsonFilePath);
-
-if ($data !== null) {
-    // Data was successfully read
-    print_r($data);
-} else {
-    // Error occurred while reading JSON
-    echo "Error: Unable to read JSON data.";
-}
 ?>
