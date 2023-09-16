@@ -1,6 +1,8 @@
 <?php
     require_once('./lib/read_plaintxt.php');
     require_once('./lib/read_json.php');
+    require_once('./lib/read_csv.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -18,10 +20,15 @@
     <?php
         $plainText = readPlainTextData('./data/data.txt');
         $jsonData = readJsonData('./data/data.json');
+        $CSVData = readCSVData('./data/data.csv');
 
-        echo $plainText;
+        //printf($CSVData);
+        print_r($CSVData,)
+
+
+        //echo $plainText;
         //print_r($jsonData);
-        echo $jsonData['books'][0]['id'];
+        //echo $jsonData['books'][0]['id'];
     ?>
 </div>
 

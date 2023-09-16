@@ -1,6 +1,8 @@
 <?php
     require_once('./lib/read_plaintxt.php');
     require_once('./lib/read_json.php');
+    require_once('./lib/read_csv.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -168,54 +170,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card mt-4 border-0 shadow-lg">
-                            <div class="card-body p-4">
-                                <h4 class="font-size-22 my-4 text-center">"Most Innovative Tech Company"</h4>
-                                <p class="text-muted text-center">2023: Awarded "Most Innovative Tech Company" by TechFuture Magazine three years in a row.</p>
-                            </div><!-- end cardbody -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-lg-4">
-                        <div class="card mt-4 border-0 shadow-lg">
-                            <div class="card-body p-4">
-                                <h4 class="font-size-22 my-4 text-center">"Top-tier educational institutions for experiential learning"</h4>
-                                <p class="text-muted text-center">2022: Celestial VR™ experiences have been licensed by top-tier educational institutions for experiential learning.</p>
-                            </div><!-- end cardbody -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-lg-4">
-                        <div class="card mt-4 border-0 shadow-lg">
-                            <div class="card-body p-4">
-                                <h4 class="font-size-22 my-4 text-center">"Most Innovative Tech Company"</h4>
-                                <p class="text-muted text-center">2022: Awarded "Most Innovative Tech Company" by TechFuture Magazine.</p>
-                            </div><!-- end cardbody -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-lg-4">
-                        <div class="card mt-4 border-0 shadow-lg">
-                            <div class="card-body p-4">
-                                <h4 class="font-size-22 my-4 text-center">"Partnered with the World Health Organization"</h4>
-                                <p class="text-muted text-center">2021: Partnered with the World Health Organization to use Luminara Glasses™ in remote surgeries, allowing skilled surgeons to guide procedures from thousands of miles away</p>
-                            </div><!-- end cardbody -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-lg-4">
-                        <div class="card mt-4 border-0 shadow-lg">
-                            <div class="card-body p-4">
-                                <h4 class="font-size-22 my-4 text-center">"Most Innovative Tech Company"</h4>
-                                <p class="text-muted text-center">2021: Awarded "Most Innovative Tech Company" by TechFuture Magazine.</p>
-                            </div><!-- end cardbody -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-lg-4">
-                        <div class="card mt-4 border-0 shadow-lg">
-                            <div class="card-body p-4">
-                                <h4 class="font-size-22 my-4 text-center">"Broke computational records with QuantNet™"</h4>
-                                <p class="text-muted text-center">2020: Broke computational records with QuantNet™, solving complex genetic sequences which paved the way for groundbreaking medical treatments.</p>
-                            </div><!-- end cardbody -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+                    <?php
+                        $awardData = readCSVData('./data/data.csv');
+                        foreach ($awardData as $key => $award) {
+                            echo '
+                                <div class="col-lg-4">
+                                    <div class="card mt-4 border-0 shadow-lg">
+                                        <div class="card-body p-4">
+                                            <h4 class="font-size-22 my-4 text-center">' . $award[0] . '</h4>
+                                            <p class="text-muted text-center">' . $award[1] . '</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ';
+                        }
+                    ?>   
                 </div>
                 <!-- end row -->
             </div>
