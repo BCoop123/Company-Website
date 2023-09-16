@@ -79,7 +79,7 @@
                             <?php
                                 $plainText = readPlainTextData('./data/data.txt');
                                 echo '<p class="mb-5 text-muted subtitle w-75 mx-auto">' . $plainText . '</p>'
-                            ?> 
+                            ?>
                         </div>
                     </div><!-- end col -->
                 </div><!-- end row -->
@@ -234,56 +234,23 @@
                 </div>
                 <!-- end row -->
                 <div class="row">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
-                            <div class="p-4">
-                                <h5 class="font-size-19 mb-1">Dr. Evelyn Hart</h5>
-                                <h6 class="text-muted text-uppercase font-size-14 mb-0 p-3">Founder & CEO</h6>
-                                <p class="text-muted">A double doctorate holder in Quantum Physics and Neural Engineering from MIT, Dr. Hart was a prodigy who published her first paper at 15. Recognized as one of the top 100 influential leaders in technology, she is the driving force behind Starluxe's vision and innovation.</p>
+                    <!-- start col -->
+                    <?php
+                        $data = readJsonData('./data/data.json');
+                        foreach ($data["people"] as $key => $person) {
+                            echo '
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
+                                    <div class="p-4">
+                                        <h5 class="font-size-19 mb-1">' . $person['name'] . '</h5>
+                                        <h6 class="text-muted text-uppercase font-size-14 mb-0 p-3">' . $person['title'] . '</h6>
+                                        <p class="text-muted">' . $person['details'] . '</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
-                            <div class="p-4">
-                                <h5 class="font-size-19 mb-1">Rajan Malhotra</h5>
-                                <h6 class="text-muted text-uppercase font-size-14 mb-0 p-3">CTO</h6>
-                                <p class="text-muted">Rajan, a software architect genius, previously worked at leading tech giants before joining Starluxe. He spearheads the technological advancements of Starluxe, ensuring that every product surpasses industry standards.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
-                            <div class="p-4">
-                                <h5 class="font-size-19 mb-1">Lila Torres</h5>
-                                <h6 class="text-muted text-uppercase font-size-14 mb-0 p-3">Chief of Design</h6>
-                                <p class="text-muted">A graduate from the Royal College of Art, Lila has a knack for merging art with technology. Her unique design aesthetics are evident in Starluxe's sleek and user-friendly products.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
-                            <div class="p-4">
-                                <h5 class="font-size-19 mb-1">Samuel Ogundipe</h5>
-                                <h6 class="text-muted text-uppercase font-size-14 mb-0 p-3">VP of Operations</h6>
-                                <p class="text-muted">With a background in global logistics and operations, Samuel ensures the smooth production and distribution of Starluxe's revolutionary products worldwide.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
-                            <div class="p-4">
-                                <h5 class="font-size-19 mb-1">Nina Zhang</h5>
-                                <h6 class="text-muted text-uppercase font-size-14 mb-0 p-3">Head of Nebula Academy</h6>
-                                <p class="text-muted">Formerly a professor at Harvard, Nina now oversees the curriculum development and delivery at Nebula Academy, ensuring quality education reaches all corners of the globe.</p>
-                            </div>
-                        </div>
-                    </div>
+                            ';
+                        }
+                    ?>
                     <!-- end col -->
                 </div>
                 <!-- end row -->
@@ -298,7 +265,10 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h2 class="fw-bold mb-4">Get in Touch</h2>
-                        <p class="text-muted mb-5">Contact us to embark on a journey of cutting-edge technology and innovation with Starluxe Innovations Ltd., the pioneers of augmented reality, virtual reality, and quantum computing, redefining the future of human experiences.</p>    
+                        <?php
+                                $plainText = readPlainTextData('./data/contact.txt');
+                                echo '<p class="text-muted mb-5">' . $plainText . '</p>'
+                        ?>
                         <div>
                             <form method="post" name="myForm" onsubmit="return validateForm()">
                                 <p id="error-msg"></p>
