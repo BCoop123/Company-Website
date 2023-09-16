@@ -362,7 +362,12 @@
                             <p class="text-white-50 f-15 mb-0">
                                 <script>
                                 document.write(new Date().getFullYear())
-                            </script> © Starluxe Innovations Ltd. Designed by BBB inc.</p>
+                            </script> 
+                            <?php
+                                $plainText = readPlainTextData('./data/data3.txt');
+                                echo '' . $plainText . '</p>'
+                            ?> 
+                            
                         </div>
                     </div>
                     <!-- end col -->
