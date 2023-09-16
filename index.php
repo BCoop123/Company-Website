@@ -4,7 +4,6 @@
     require_once('./lib/read_csv.php');
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,9 +16,13 @@
         <meta name="description" content="Premium Bootstrap 5 Landing Page Template" />
         <meta name="keywords" content="bootstrap 5, premium, marketing, multipurpose" />
         <meta content="Themesbrand" name="author" />
-        <!-- favicon -->
-        <link rel="shortcut icon" href="images/favicon.ico" />
 
+        <!-- favicon -->
+        <?php
+            $plainText = readPlainTextData('./data/data5.txt');
+            echo '<link rel="shortcut icon" href="' . $plainText . '" />'
+        ?>
+        
         <!-- css -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
@@ -41,7 +44,6 @@
         <!--Navbar Start-->
         <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top" id="navbar">
             <div class="container">
-
                 <?php
                     $plainText = readPlainTextData('./data/data4.txt');
                     echo '<h2>' . $plainText . '</h2>'
