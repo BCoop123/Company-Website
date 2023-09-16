@@ -1,3 +1,7 @@
+<?php
+    require_once('./lib/read_plaintxt.php');
+    require_once('./lib/read_json.php');
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +75,10 @@
                     <div class="col-lg-8">
                         <div class="text-center">
                             <h1 class="font-weight-semibold mb-4 hero-3-title">Overview</h1>
-                            <p class="mb-5 text-muted subtitle w-75 mx-auto">Starluxe Innovations Ltd. is a cutting-edge technology company founded in 2020, with headquarters nestled in the heart of Silicon Valley, San Francisco. Touted as the "pioneers of the future," Starluxe is at the forefront of integrating augmented reality (AR), virtual reality (VR), and quantum computing to create unparalleled user experiences.</p>    
+                            <?php
+                                $plainText = readPlainTextData('./data/data.txt');
+                                echo '<p class="mb-5 text-muted subtitle w-75 mx-auto">' . $plainText . '</p>'
+                            ?> 
                         </div>
                     </div><!-- end col -->
                 </div><!-- end row -->
@@ -112,69 +119,32 @@
                             <div class="tab-content" id="pricingpills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-monthly" role="tabpanel" aria-labelledby="pills-monthly-tab">
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="card plan-card mt-4 rounded text-center border-0 shadow overflow-hidden">
-                                                <div class="card-body px-4 py-5">
-                                                    <!-- <div class="icon-mono avatar-md bg-soft-primary text-primary rounded mx-auto mb-5"><i class="icon-lg" data-feather="circle"></i></div> -->
-                                                    <h4 class="text-uppercase mb-4 pb-1">Celestial VR™</h4>
-                                                    <p><span class="fw-bold">A virtual reality platform offering hyper-realistic experiences, from serene walks on Mars to diving into the Marianas Trench, all from the comfort of your living room.</span></p>
-                                                    <h5>Applications:</h5>
-                                                    <ul>
-                                                        <li class="text-muted">Educational Suites: Users can explore ancient civilizations, understand complex scientific phenomena, or walk among dinosaurs, making learning truly immersive.</li>
-                                                        <li class="text-muted">Adventure Modules: Dive with sharks, climb Everest, or navigate the Amazon rainforest; Celestial VR™ promises adrenaline-filled experiences without risks.</li>
-                                                        <li class="text-muted">Therapeutic Landscapes: Tailored experiences like serene beaches, tranquil forests, or mesmerizing galaxies help users relax and de-stress.</li>
-                                                    </ul>
+                                        <!-- start col -->
+                                        <?php
+                                            $data = readJsonData('./data/data.json');
+                                            foreach ($data["products"] as $key => $product) {
+                                                echo '
+                                                <div class="col-lg-4">
+                                                    <div class="card plan-card mt-4 rounded text-center border-0 shadow overflow-hidden">
+                                                        <div class="card-body px-4 py-5">
+                                                            <h4 class="text-uppercase mb-4 pb-1">' . $product['name'] . '</h4>
+                                                            <p><span class="fw-bold">' . $product['description'] . '</span></p>
+                                                            <h5>Applications:</h5>
+                                                            <ul>
+                                                ';
+                                            
+                                                foreach ($product['applications'] as $appName => $appDescription) {
+                                                    echo '<li class="text-muted">' . $appDescription . '</li>';
+                                                }
+                                            
+                                                echo '
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col -->
-                                        <div class="col-lg-4">
-                                            <div class="card plan-card mt-4 rounded text-center border-0 shadow overflow-hidden">
-                                                <div class="card-body px-4 py-5">
-                                                    <!-- <div class="icon-mono avatar-md bg-soft-primary text-primary rounded mx-auto mb-5"><i class="icon-lg" data-feather="circle"></i></div> -->
-                                                    <h4 class="text-uppercase mb-4 pb-1">Celestial VR™</h4>
-                                                    <p><span class="fw-bold">A virtual reality platform offering hyper-realistic experiences, from serene walks on Mars to diving into the Marianas Trench, all from the comfort of your living room.</span></p>
-                                                    <h5>Applications:</h5>
-                                                    <ul>
-                                                        <li class="text-muted">Educational Suites: Users can explore ancient civilizations, understand complex scientific phenomena, or walk among dinosaurs, making learning truly immersive.</li>
-                                                        <li class="text-muted">Adventure Modules: Dive with sharks, climb Everest, or navigate the Amazon rainforest; Celestial VR™ promises adrenaline-filled experiences without risks.</li>
-                                                        <li class="text-muted">Therapeutic Landscapes: Tailored experiences like serene beaches, tranquil forests, or mesmerizing galaxies help users relax and de-stress.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col -->
-                                        <div class="col-lg-4">
-                                            <div class="card plan-card mt-4 rounded text-center border-0 shadow overflow-hidden">
-                                                <div class="card-body px-4 py-5">
-                                                    <!-- <div class="icon-mono avatar-md bg-soft-primary text-primary rounded mx-auto mb-5"><i class="icon-lg" data-feather="circle"></i></div> -->
-                                                    <h4 class="text-uppercase mb-4 pb-1">Celestial VR™</h4>
-                                                    <p><span class="fw-bold">A virtual reality platform offering hyper-realistic experiences, from serene walks on Mars to diving into the Marianas Trench, all from the comfort of your living room.</span></p>
-                                                    <h5>Applications:</h5>
-                                                    <ul>
-                                                        <li class="text-muted">Educational Suites: Users can explore ancient civilizations, understand complex scientific phenomena, or walk among dinosaurs, making learning truly immersive.</li>
-                                                        <li class="text-muted">Adventure Modules: Dive with sharks, climb Everest, or navigate the Amazon rainforest; Celestial VR™ promises adrenaline-filled experiences without risks.</li>
-                                                        <li class="text-muted">Therapeutic Landscapes: Tailored experiences like serene beaches, tranquil forests, or mesmerizing galaxies help users relax and de-stress.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col -->
-                                        <div class="col-lg-4">
-                                            <div class="card plan-card mt-4 rounded text-center border-0 shadow overflow-hidden">
-                                                <div class="card-body px-4 py-5">
-                                                    <!-- <div class="icon-mono avatar-md bg-soft-primary text-primary rounded mx-auto mb-5"><i class="icon-lg" data-feather="circle"></i></div> -->
-                                                    <h4 class="text-uppercase mb-4 pb-1">Celestial VR™</h4>
-                                                    <p><span class="fw-bold">A virtual reality platform offering hyper-realistic experiences, from serene walks on Mars to diving into the Marianas Trench, all from the comfort of your living room.</span></p>
-                                                    <h5>Applications:</h5>
-                                                    <ul>
-                                                        <li class="text-muted">Educational Suites: Users can explore ancient civilizations, understand complex scientific phenomena, or walk among dinosaurs, making learning truly immersive.</li>
-                                                        <li class="text-muted">Adventure Modules: Dive with sharks, climb Everest, or navigate the Amazon rainforest; Celestial VR™ promises adrenaline-filled experiences without risks.</li>
-                                                        <li class="text-muted">Therapeutic Landscapes: Tailored experiences like serene beaches, tranquil forests, or mesmerizing galaxies help users relax and de-stress.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                ';
+                                            }
+                                        ?>
                                         <!-- end col -->
                                     </div>
                                     <!-- end row -->

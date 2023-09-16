@@ -1,22 +1,40 @@
 {
-    "books": [
+    "products": [
         {
-            "id": 1,
-            "title": "The Great Gatsby",
-            "author": "F. Scott Fitzgerald",
-            "publishedYear": 1925
+            "name": "Celestial VR™",
+            "description": "A virtual reality platform offering hyper-realistic experiences, from serene walks on Mars to diving into the Marianas Trench, all from the comfort of your living room.",
+            "applications": {
+                "Educational Suites": "Users can explore Mars, dive deep into the ocean, or understand the wonders of space.",
+                "Adventure Modules": "Experience serene walks on Mars or diving into the Marianas Trench.",
+                "Therapeutic Landscapes": "Enjoy the peace of Martian sunsets or the vastness of outer space."
+            }
         },
         {
-            "id": 2,
-            "title": "Moby Dick",
-            "author": "Herman Melville",
-            "publishedYear": 1851
+            "name": "Luminara Glasses™",
+            "description": "Lightweight AR glasses that overlay digital information on the real world. Users can seamlessly interact with virtual objects, get real-time data overlays, or even project a movie onto any wall.",
+            "applications": {
+                "Educational Suites": "Visualize ancient ruins, complex molecular structures, or projected lectures.",
+                "Adventure Modules": "Interact with 3D holograms of wild animals or navigate virtual mazes.",
+                "Therapeutic Landscapes": "View relaxing landscapes, calming visual patterns, or meditation guidance."
+            }
         },
         {
-            "id": 3,
-            "title": "To Kill a Mockingbird",
-            "author": "Harper Lee",
-            "publishedYear": 1960
+            "name": "QuantNet™",
+            "description": "The world’s first accessible quantum computer service for businesses. It promises computations at speeds previously deemed impossible, ideal for industries like finance, healthcare, and space exploration.",
+            "applications": {
+                "Educational Suites": "Understand quantum physics with visual simulations, explore quantum algorithms, or experiment with virtual quantum circuits.",
+                "Adventure Modules": "Experience quantum realms, visualize superposition, or traverse quantum entanglements.",
+                "Therapeutic Landscapes": "Meditate in quantum-generated landscapes, or relax with quantum-driven visual patterns."
+            }
+        },
+        {
+            "name": "Nebula Academy™",
+            "description": "A global online institution teaching the next generation about AR, VR, and quantum computing. It offers courses from beginner to advanced levels and provides certification recognized worldwide.",
+            "applications": {
+                "Educational Suites": "Courses on AR, VR, and quantum computing fundamentals to advanced topics.",
+                "Adventure Modules": "Hands-on projects on AR games, VR simulations, or quantum algorithms.",
+                "Therapeutic Landscapes": "Virtual campuses, AR-enhanced relaxation spaces, or quantum-inspired visual relaxation modules."
+            }
         }
     ]
 }
