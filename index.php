@@ -95,7 +95,10 @@
                 <div class="row justify-content-center mb-5">
                     <div class="col-lg-7 text-center">
                         <h2 class="fw-bold">Mission Statement</h2>
-                        <p class="text-muted">"To redefine boundaries, merge realities, and craft the unimaginable, propelling humanity towards a future where technology and dreams are indistinguishable."</p>
+                        <?php
+                            $plainText = readPlainTextData('./data/data2.txt');
+                            echo '<p class="text-muted">' . $plainText . '</p>'
+                        ?> 
                     </div>
                 </div>
             </div>
