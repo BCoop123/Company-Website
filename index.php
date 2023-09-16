@@ -309,11 +309,14 @@
                                 <div class="mt-4 mt-lg-0">
                                     <h4 class="text-white font-size-18 mb-3">Quick Links</h4>
                                     <ul class="list-unstyled footer-sub-menu">
-                                        <li><a href="#Overview" class="footer-link">Overview</a></li>
-                                        <li><a href="#Mission" class="footer-link">Mission</a></li>
-                                        <li><a href="#Products" class="footer-link">Products & Services</a></li>
-                                        <li><a href="#Awards" class="footer-link">Awards</a></li>
-                                        <li><a href="#team" class="footer-link">Our Team</a></li>
+                                    <?php
+                                        $footerData = readCSVData('./data/data2.csv');
+                                        foreach ($footerData as $key => $footer) {
+                                            echo '
+                                                <li><a href="#' . $footer[0] . '" class="footer-link">' . $footer[1] . '</a></li>
+                                            ';
+                                        }
+                                    ?>   
                                     </ul>
                                 </div>
                             </div>
