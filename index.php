@@ -9,7 +9,10 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Starluxe Innovations Ltd.</title>
+        <?php
+            $plainText = readPlainTextData('./data/data4.txt');
+            echo '<title>' . $plainText . '</title>'
+        ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Premium Bootstrap 5 Landing Page Template" />
         <meta name="keywords" content="bootstrap 5, premium, marketing, multipurpose" />
@@ -39,31 +42,25 @@
         <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top" id="navbar">
             <div class="container">
 
-                <!-- LOGO -->
-                <h2>Starluxe Innovations Ltd.</h2>
+                <?php
+                    $plainText = readPlainTextData('./data/data4.txt');
+                    echo '<h2>' . $plainText . '</h2>'
+                ?>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ms-auto navbar-center" id="navbar-navlist">
-                        <li class="nav-item">
-                            <a href="#Overview" class="nav-link active">Overview</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#Mission" class="nav-link">Mission</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#Products" class="nav-link">Products & Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#Awards" class="nav-link">Awards</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#team" class="nav-link">Team</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#contact" class="nav-link">Contact Us</a>
-                        </li>
+                        <?php
+                            $navData = readCSVData('./data/data2.csv');
+                            foreach ($navData as $key => $nav) {
+                                echo '
+                                    <li class="nav-item">
+                                         <a href="#' . $nav[0] . '" class="nav-link">' . $nav[1] . '</a>
+                                    </li>
+                                ';
+                            }
+                        ?>   
                     </ul>
                 </div>
             </div>
