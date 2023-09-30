@@ -122,8 +122,8 @@
                                     <div class="row">
                                         <!-- start col -->
                                         <?php
-                                            $data = readJsonData('./data/data.json');
-                                            foreach ($data["products"] as $key => $product) {
+                                            $data = readJsonData('./data/products/products.json');
+                                            foreach ($data as $key => $product) {
                                                 echo '
                                                 <div class="col-lg-4">
                                                     <div class="card plan-card mt-4 rounded text-center border-0 shadow overflow-hidden">
@@ -207,8 +207,8 @@
                 <div class="row">
                     <!-- start col -->
                     <?php
-                        $data = readJsonData('./data/data.json');
-                        foreach ($data["people"] as $key => $person) {
+                        $data = readJsonData('./data/team/team.json');
+                        foreach ($data as $key => $person) {
                             echo '
                             <div class="col-lg-3 col-sm-6">
                                 <div class="team-box mt-4 position-relative overflow-hidden rounded text-center shadow-lg">                    
