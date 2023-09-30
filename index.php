@@ -173,7 +173,7 @@
                 </div>
                 <div class="row">
                     <?php
-                        $awardData = readCSVData('./data/data.csv');
+                        $awardData = readCSVData('./data/awards/awards.csv');
                         foreach ($awardData as $key => $award) {
                             echo '
                                 <div class="col-lg-4">
