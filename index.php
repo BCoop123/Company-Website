@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8" />
         <?php
-            $plainText = readPlainTextData('./data/data4.txt');
+            $plainText = readPlainTextData('./data/pages/companyName.txt');
             echo '<title>' . $plainText . '</title>'
         ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +19,7 @@
 
         <!-- favicon -->
         <?php
-            $plainText = readPlainTextData('./data/data5.txt');
+            $plainText = readPlainTextData('./data/pages/iconPath.txt');
             echo '<link rel="shortcut icon" href="' . $plainText . '" />'
         ?>
         
@@ -45,7 +45,7 @@
         <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top" id="navbar">
             <div class="container">
                 <?php
-                    $plainText = readPlainTextData('./data/data4.txt');
+                    $plainText = readPlainTextData('./data/pages/companyName.txt');
                     echo '<h2>' . $plainText . '</h2>'
                 ?>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
                         <div class="text-center">
                             <h1 class="font-weight-semibold mb-4 hero-3-title">Overview</h1>
                             <?php
-                                $plainText = readPlainTextData('./data/data.txt');
+                                $plainText = readPlainTextData('./data/pages/overview.txt');
                                 echo '<p class="mb-5 text-muted subtitle w-75 mx-auto">' . $plainText . '</p>'
                             ?>
                         </div>
@@ -95,7 +95,7 @@
                     <div class="col-lg-7 text-center">
                         <h2 class="fw-bold">Mission Statement</h2>
                         <?php
-                            $plainText = readPlainTextData('./data/data2.txt');
+                            $plainText = readPlainTextData('./data/pages/missionStatement.txt');
                             echo '<p class="text-muted">' . $plainText . '</p>'
                         ?> 
                     </div>
@@ -237,7 +237,7 @@
                     <div class="col-lg-6">
                         <h2 class="fw-bold mb-4">Get in Touch</h2>
                         <?php
-                                $plainText = readPlainTextData('./data/contact.txt');
+                                $plainText = readPlainTextData('./data/pages/contact.txt');
                                 echo '<p class="text-muted mb-5">' . $plainText . '</p>'
                         ?>
                         <div>
@@ -340,10 +340,9 @@
                                 document.write(new Date().getFullYear())
                             </script> 
                             <?php
-                                $plainText = readPlainTextData('./data/data3.txt');
+                                $plainText = readPlainTextData('./data/pages/copyright.txt');
                                 echo '' . $plainText . '</p>'
                             ?> 
-                            
                         </div>
                     </div>
                     <!-- end col -->
