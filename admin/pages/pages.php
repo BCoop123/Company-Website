@@ -59,6 +59,12 @@ function getPageInfo($dir_path) {
     }
     return $files;
 }
+// Function to delete the contents of a text file
+function deleteTxtFileContents($txtFileName) {
+    // Open the text file for writing, which clears its contents
+    $file = fopen($txtFileName, 'w');
+    fclose($file);
+}
 
 // Function to get the first few words from a text file
 function getFirstWordsFromFile($txtFileName, $numWords = 10) {

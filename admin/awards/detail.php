@@ -4,15 +4,11 @@ require_once('./awards.php');
 
 // Check if the 'award' parameter is set in the URL
 if (isset($_GET['award'])) {
-    $awardTemp = $_GET['award'];
-    $awardName = str_replace("+", " ", $awardTemp);
-    echo $dir_path;
-    echo $awardName;
+    $awardName = $_GET['award'];
     $awardDetails = getAwardDetails($dir_path, $awardName);
 
     if (!$awardDetails) {
-        echo "file not found.";
-
+        echo "Award not found.";
         exit;
     }
 } else {

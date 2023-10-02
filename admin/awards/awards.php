@@ -8,24 +8,24 @@ function createTable($headings, $files) {
             <thead>
                 <tr>
     ';
-                    foreach ($headings as $key => $heading) {
-                        echo '
-                            <th>' . $heading . '</th>
-                        ';
-                    };
+    foreach ($headings as $key => $heading) {
+        echo '
+            <th>' . $heading . '</th>
+        ';
+    };
     echo '
                 </tr>
             </thead>
             <tbody>
     ';
-                    foreach ($files as $key => $file) {
-                        echo '
-                            <tr>
-                                <td><a href="./edit.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
-                                <td>' . $file[1] . '</td>
-                            </tr>
-                        ';
-                    };
+    foreach ($files as $key => $file) {
+        echo '
+            <tr>
+                <td><a href="./detail.php?award=' . urlencode($file[0]) . '">' . $file[0] . '</a></td>
+                <td>' . $file[1] . '</td>
+            </tr>
+        ';
+    };
     echo '
             </tbody>
         </table>
@@ -45,7 +45,7 @@ function getAwardInfo($dir_path) {
 
             // Check if it's a CSV file and not a directory
             if (is_file($file_path) && pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {        
-                
+
                 // Open the CSV file for reading
                 if (($handle = fopen($file_path, "r")) !== FALSE) {
 
@@ -68,5 +68,49 @@ function getAwardInfo($dir_path) {
     }
     return $productsArray;
 }
+function deleteAwardFromCSV($csvFileName, $awardIndex) {
+    // Check if the CSV file exists
+    if (file_exists($csvFileName)) {
+        // Read the CSV file into an array
+        $csvData = file($csvFileName);
 
+        // Check if the award index is within the valid range
+        if ($awardIndex >= 0 && $awardIndex < count($csvData)) {
+            // Remove the line at the specified index
+            unset($csvData[$awardIndex]);
+
+            // Re-index the array to remove gaps
+            $csvData = array_values($csvData);
+
+            // Write the updated data back to the CSV file
+            file_put_contents($csvFileName, implode('', $csvData));
+
+            // Return true to indicate successful deletion
+            return true;
+        } else {
+            // Invalid award index
+            return false;
+        }
+    } else {
+        // CSV file does not exist
+        return false;
+    }
+}
+function getAwardDetails($csv_path, $awardName) {
+    $awardDetails = null;
+
+    if (is_file($csv_path) && pathinfo($csv_path, PATHINFO_EXTENSION) === 'csv') {        
+        if (($handle = fopen($csv_path, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($data[0] === $awardName) { // Check if the first column matches the award name
+                    $awardDetails = $data;
+                    break;
+                }
+            }
+            fclose($handle);
+        }
+    }
+
+    return $awardDetails;
+}
 ?>
