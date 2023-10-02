@@ -71,5 +71,23 @@ function getProductInfo($dir_path) {
     }
     return $productsArray;
 }
+function getProductDetails($productName) {
+    $jsonFile = "../../data/products/products.json";
 
+    if (file_exists($jsonFile)) {
+        $productsData = json_decode(file_get_contents($jsonFile), true);
+
+        foreach ($productsData as $product) {
+            if ($product['name'] === $productName) {
+                return $product;
+            }
+        }
+    } else {
+        echo "Products file not found.";
+    }
+
+    return null;
+}
 ?>
+
+

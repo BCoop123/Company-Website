@@ -60,4 +60,27 @@ function getPageInfo($dir_path) {
     return $files;
 }
 
+<<<<<<< Updated upstream
+=======
+// Function to get the first few words from a text file
+function getFirstWordsFromFile($txtFileName, $numWords = 10) {
+    $content = file_get_contents($txtFileName);
+    $words = preg_split('/\s+/', $content, $numWords + 1);
+    return implode(' ', array_slice($words, 0, $numWords));
+}
+function getPageContent($dir_path, $fileName) {
+    // Construct the full path to the file
+    $file_path = $dir_path . "/" . $fileName;
+
+    // Check if the file exists and is a file (not a directory)
+    if (is_file($file_path)) {
+        // Fetch the contents of the file
+        $pageContent = file_get_contents($file_path);
+        return $pageContent;
+    } else {
+        return null;  // File doesn't exist or is not a valid page
+    }
+}
+
+>>>>>>> Stashed changes
 ?>
