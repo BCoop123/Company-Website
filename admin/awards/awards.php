@@ -68,5 +68,32 @@ function getAwardInfo($dir_path) {
     }
     return $productsArray;
 }
+function deleteAwardFromCSV($csvFileName, $awardIndex) {
+    // Check if the CSV file exists
+    if (file_exists($csvFileName)) {
+        // Read the CSV file into an array
+        $csvData = file($csvFileName);
 
+        // Check if the award index is within the valid range
+        if ($awardIndex >= 0 && $awardIndex < count($csvData)) {
+            // Remove the line at the specified index
+            unset($csvData[$awardIndex]);
+
+            // Re-index the array to remove gaps
+            $csvData = array_values($csvData);
+
+            // Write the updated data back to the CSV file
+            file_put_contents($csvFileName, implode('', $csvData));
+
+            // Return true to indicate successful deletion
+            return true;
+        } else {
+            // Invalid award index
+            return false;
+        }
+    } else {
+        // CSV file does not exist
+        return false;
+    }
+}
 ?>
