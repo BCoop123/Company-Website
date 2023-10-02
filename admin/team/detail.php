@@ -9,7 +9,12 @@
 </head>
 
 <body>
-
+    <div class="text-center mt-4">
+        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+    </div>
+    <div class="text-center mt-4">
+        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+    </div>
     <div class="container">
         <?php
             // Check if a file is specified in the URL

@@ -28,6 +28,12 @@ if (isset($_GET['award'])) {
 </head>
 
 <body>
+    <div class="text-center mt-4">
+        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+    </div>
+    <div class="text-center mt-4">
+        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+    </div>
     <div class="container">
         <h1><?php echo $awardDetails[0]; ?> Details</h1>
         <table class="table">

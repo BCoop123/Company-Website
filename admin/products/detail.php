@@ -1,11 +1,11 @@
 <?php
-$dir_path = "../../data/products";
+$dir_path = "../../data/products.json";
 require_once('./products.php');
 
 // Check if the 'file' parameter is set in the URL
 if (isset($_GET['file'])) {
     $fileName = $_GET['file'];
-    $productInfo = getProductDetails($dir_path, $fileName);
+    $productInfo = getProductDetails($fileName);
 
     if (!$productInfo) {
         echo "Product not found.";
@@ -28,6 +28,12 @@ if (isset($_GET['file'])) {
 </head>
 
 <body>
+    <div class="text-center mt-4">
+        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+    </div>
+    <div class="text-center mt-4">
+        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+    </div>
     <div class="container">
         <h1><?php echo $fileName; ?> Details</h1>
         <table class="table">
@@ -42,11 +48,11 @@ if (isset($_GET['file'])) {
             </thead>
             <tbody>
                 <tr>
-                    <td><?php echo $productInfo[0]; ?></td>
-                    <td><?php echo $productInfo[1]; ?></td>
-                    <td><?php echo $productInfo[2]["Educational Suites"]; ?></td>
-                    <td><?php echo $productInfo[2]["Adventure Modules"]; ?></td>
-                    <td><?php echo $productInfo[2]["Therapeutic Landscapes"]; ?></td>
+                    <td><?php echo $productInfo['name']; ?></td>
+                    <td><?php echo $productInfo['description']; ?></td>
+                    <td><?php echo $productInfo['applications']["Educational Suites"]; ?></td>
+                    <td><?php echo $productInfo['applications']["Adventure Modules"]; ?></td>
+                    <td><?php echo $productInfo['applications']["Therapeutic Landscapes"]; ?></td>
                 </tr>
             </tbody>
         </table>

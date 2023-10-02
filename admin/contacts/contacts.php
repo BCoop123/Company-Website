@@ -111,7 +111,7 @@ function getContactDetails($contactsFilePath, $contactFile) {
 
     // Search for the contact based on the provided file name
     foreach ($contactsArray as $contact) {
-        if ($contact['name'] === $contactFile) {
+        if ($contact['subject'] === $contactFile) {
             return $contact;
         }
     }
