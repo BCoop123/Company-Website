@@ -72,4 +72,30 @@ function getFirstWordsFromFile($txtFileName, $numWords = 10) {
     $words = preg_split('/\s+/', $content, $numWords + 1);
     return implode(' ', array_slice($words, 0, $numWords));
 }
+
+function editFile($dir_path, $txtFileName) {
+    $files = [];
+
+    // Open the directory
+    $dir_handle = opendir($dir_path);
+
+    if ($dir_handle) {
+        while (false !== ($filename = readdir($dir_handle))) {
+            $file_path = $dir_path . "/" . $filename;
+
+            // Check if it's a file and not a directory
+            if (is_file($file_path) and $filename === $txtFileName) {        
+                // Fetch and print the contents of the file
+                $contents = file_get_contents($file_path);
+                print($contents);
+            }
+        }
+
+        // Close the directory handle
+        closedir($dir_handle);
+    } else {
+        echo "Failed to open directory!";
+    }
+    return $files;
+}
 ?>
