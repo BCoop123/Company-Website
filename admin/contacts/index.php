@@ -1,6 +1,6 @@
 <?php
 $dir_path = "../../data/contacts";
-$headings = ["Name", "Email", "Subject"];
+$headings = ["Subject", "Name", "Email"];
 require_once('./contacts.php')
 
 ?>
