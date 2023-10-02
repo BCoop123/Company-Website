@@ -29,7 +29,7 @@ if (isset($_GET['file'])) {
 
 <body>
     <div class="text-center mt-4">
-        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+        <a href="edit.php?file=<?= $_GET["file"] ?>" class="btn btn-primary button-margin">Edit</a>
     </div>
     <div class="text-center mt-4">
         <a href="delete.php" class="btn btn-primary button-margin">Delete</a>

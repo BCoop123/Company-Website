@@ -1,7 +1,27 @@
 <?php
 $dir_path = "../../data/pages";
-$headings = ["Page", "Contents"];
-require_once('./pages.php')
+require_once('./pages.php');
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get user input from the form
+    $pageFilename = $_POST["page_filename"];
+    $pageContents = $_POST["page_contents"];
+
+    // Add or overwrite the file
+    if (file_put_contents($dir_path . '/' . $pageFilename, $pageContents) !== false) {
+        // If successful and the new filename is different from the old one, delete the old file
+        if (isset($_GET["file"]) and $_GET["file"] != $_POST["page_filename"]) {
+            deleteFile($dir_path . '/' . $_GET["file"]);
+        }
+        
+        //Redirect to the details page
+        header("Location: detail.php?file=" . urlencode($pageFilename));
+        exit();
+    } else {
+        echo "Failed to save the file.";
+    }
+}
 
 ?>
 
@@ -17,9 +37,20 @@ require_once('./pages.php')
 
 <body>
 
-    <?php
-        createTable($headings, getPageInfo($dir_path))
-    ?>
+    <div class="container">
+        <h1>Edit Page</h1>
+        <form method="post" action="edit.php?file=<?= $_GET["file"] ?>">
+            <div class="form-group">
+                <label for="page_filename">Page Filename:</label>
+                <input type="text" class="form-control" id="page_filename" name="page_filename" value="<?= $_GET["file"] ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="page_contents">Page Contents:</label>
+                <textarea class="form-control" id="page_contents" name="page_contents" rows="4" required><?=getPageContent($dir_path, $_GET["file"]) ?></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
