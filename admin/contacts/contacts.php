@@ -103,4 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     appendToJSONFile($filename, $formData);
 
+}
+
 ?>
