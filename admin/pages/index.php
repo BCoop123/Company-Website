@@ -14,6 +14,18 @@ require_once('./pages.php')
     <title>Pages</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+        .button-margin {
+            margin-bottom: 0.5in;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="text-center mt-4">
+        <a href="create.php" class="btn btn-primary button-margin">Create New</a>
+    </div>
 
 <body>
 
