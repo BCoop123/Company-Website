@@ -103,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     appendToJSONFile($filename, $formData);
 
-    echo "Form data appended successfully!";
 } else {
     echo "Invalid request method!";
 }
