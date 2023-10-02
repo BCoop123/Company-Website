@@ -70,4 +70,42 @@ function getContactsInfo($dir_path) {
     return $contactsArray;
 }
 
+function appendToJSONFile($filename, $data) {
+    // Check if the file exists
+    if (file_exists($filename)) {
+        $current_data = json_decode(file_get_contents($filename), true);
+    } else {
+        $current_data = array();
+    }
+
+    // Append the new data
+    $current_data[] = $data;
+
+    // Save the updated data
+    file_put_contents($filename, json_encode($current_data, JSON_PRETTY_PRINT));
+}
+
+// Ensure that the request method is POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $subject = $_POST['subject'] ?? '';
+    $comments = $_POST['comments'] ?? '';
+
+    $formData = [
+        'name' => $name,
+        'email' => $email,
+        'subject' => $subject,
+        'comments' => $comments
+    ];
+
+    $filename = '../../data/contacts/contacts.json';
+
+    appendToJSONFile($filename, $formData);
+
+    echo "Form data appended successfully!";
+} else {
+    echo "Invalid request method!";
+}
+
 ?>

@@ -2,7 +2,7 @@
     require_once('./lib/read_plaintxt.php');
     require_once('./lib/read_json.php');
     require_once('./lib/read_csv.php');
-
+    require_once('./admin/contacts/contacts.php')
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -276,6 +276,7 @@
                             </form>
                             <!-- end form -->
                         </div>
+                        
                     </div>
                     <!-- end col -->
                     <div class="col-lg-5 ms-lg-auto">
