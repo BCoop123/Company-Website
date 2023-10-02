@@ -104,5 +104,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     appendToJSONFile($filename, $formData);
 
 }
+function getContactDetails($contactsFilePath, $contactFile) {
+    // Load the contacts data from the JSON file
+    $contactsData = file_get_contents($contactsFilePath);
+    $contactsArray = json_decode($contactsData, true);
+
+    // Search for the contact based on the provided file name
+    foreach ($contactsArray as $contact) {
+        if ($contact['name'] === $contactFile) {
+            return $contact;
+        }
+    }
+
+    // Return null if contact not found
+    return null;
+}
+
 
 ?>
