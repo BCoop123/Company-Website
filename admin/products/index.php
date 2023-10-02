@@ -16,6 +16,18 @@ require_once('./products.php')
 </head>
 
 <body>
+<style>
+        .button-margin {
+            margin-bottom: 0.5in;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="text-center mt-4">
+        <a href="create.php" class="btn btn-primary button-margin">Create New</a>
+    </div>
 
     <?php
         createTable($headings, getProductInfo($dir_path))
