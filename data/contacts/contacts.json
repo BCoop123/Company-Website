@@ -1,0 +1,14 @@
+[
+    {
+        "name": "John Doe",
+        "email": "jdoe@gmail.com",
+        "subject": "This site is great!",
+        "message": "Hi"
+    },
+    {
+        "name": "Bill Doe",
+        "email": "bdoe@gmail.com",
+        "subject": "This site is a really great!",
+        "message": "Hi there" 
+    }
+]
