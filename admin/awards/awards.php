@@ -96,36 +96,19 @@ function deleteAwardFromCSV($csvFileName, $awardIndex) {
         return false;
     }
 }
-function getAwardDetails($dir_path, $awardName) {
+function getAwardDetails($csv_path, $awardName) {
     $awardDetails = null;
 
-    // Open the directory
-    $dir_handle = opendir($dir_path);
-
-    if ($dir_handle) {
-        while (false !== ($filename = readdir($dir_handle))) {
-            $file_path = $dir_path . "/" . $filename;
-
-            // Check if it's a CSV file and not a directory
-            if (is_file($file_path) && pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {        
-                // Check if this is the CSV file for the specified award
-                $fileAwardName = pathinfo($filename, PATHINFO_FILENAME);
-                if ($fileAwardName === $awardName) {
-                    // Open the CSV file for reading
-                    if (($handle = fopen($file_path, "r")) !== FALSE) {
-                        // Read the first line (assuming it contains the award details)
-                        $awardDetails = fgetcsv($handle, 1000, ",");
-                        fclose($handle);
-                        break;  // Stop looking once we find the matching award
-                    }
+    if (is_file($csv_path) && pathinfo($csv_path, PATHINFO_EXTENSION) === 'csv') {        
+        if (($handle = fopen($csv_path, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($data[0] === $awardName) { // Check if the first column matches the award name
+                    $awardDetails = $data;
+                    break;
                 }
             }
+            fclose($handle);
         }
-
-        // Close the directory handle
-        closedir($dir_handle);
-    } else {
-        echo "Failed to open directory!";
     }
 
     return $awardDetails;

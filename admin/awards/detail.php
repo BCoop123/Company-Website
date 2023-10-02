@@ -1,5 +1,5 @@
 <?php
-$dir_path = "../../data/awards";
+$dir_path = "../../data/awards/awards.csv";
 require_once('./awards.php');
 
 // Check if the 'award' parameter is set in the URL
@@ -23,13 +23,13 @@ if (isset($_GET['award'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $awardDetails['Award']; ?> Details</title>
+    <title><?php echo $awardDetails[0]; ?> Details</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <h1><?php echo $awardDetails['Award']; ?> Details</h1>
+        <h1><?php echo $awardDetails[0]; ?> Details</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -39,8 +39,8 @@ if (isset($_GET['award'])) {
             </thead>
             <tbody>
                 <tr>
-                    <td><?php echo $awardDetails['Award']; ?></td>
-                    <td><?php echo $awardDetails['Description']; ?></td>
+                    <td><?php echo $awardDetails[0]; ?></td>
+                    <td><?php echo $awardDetails[1]; // Assuming the second column in your CSV contains the description ?></td>
                 </tr>
             </tbody>
         </table>
