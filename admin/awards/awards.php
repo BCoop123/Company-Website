@@ -8,24 +8,24 @@ function createTable($headings, $files) {
             <thead>
                 <tr>
     ';
-                    foreach ($headings as $key => $heading) {
-                        echo '
-                            <th>' . $heading . '</th>
-                        ';
-                    };
+    foreach ($headings as $key => $heading) {
+        echo '
+            <th>' . $heading . '</th>
+        ';
+    };
     echo '
                 </tr>
             </thead>
             <tbody>
     ';
-                    foreach ($files as $key => $file) {
-                        echo '
-                            <tr>
-                                <td><a href="./edit.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
-                                <td>' . $file[1] . '</td>
-                            </tr>
-                        ';
-                    };
+    foreach ($files as $key => $file) {
+        echo '
+            <tr>
+                <td><a href="./detail.php?award=' . urlencode($file[0]) . '">' . $file[0] . '</a></td>
+                <td>' . $file[1] . '</td>
+            </tr>
+        ';
+    };
     echo '
             </tbody>
         </table>
@@ -45,7 +45,7 @@ function getAwardInfo($dir_path) {
 
             // Check if it's a CSV file and not a directory
             if (is_file($file_path) && pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {        
-                
+
                 // Open the CSV file for reading
                 if (($handle = fopen($file_path, "r")) !== FALSE) {
 
@@ -69,4 +69,38 @@ function getAwardInfo($dir_path) {
     return $productsArray;
 }
 
+function getAwardDetails($dir_path, $awardName) {
+    $awardDetails = null;
+
+    // Open the directory
+    $dir_handle = opendir($dir_path);
+
+    if ($dir_handle) {
+        while (false !== ($filename = readdir($dir_handle))) {
+            $file_path = $dir_path . "/" . $filename;
+
+            // Check if it's a CSV file and not a directory
+            if (is_file($file_path) && pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {        
+                // Check if this is the CSV file for the specified award
+                $fileAwardName = pathinfo($filename, PATHINFO_FILENAME);
+                if ($fileAwardName === $awardName) {
+                    // Open the CSV file for reading
+                    if (($handle = fopen($file_path, "r")) !== FALSE) {
+                        // Read the first line (assuming it contains the award details)
+                        $awardDetails = fgetcsv($handle, 1000, ",");
+                        fclose($handle);
+                        break;  // Stop looking once we find the matching award
+                    }
+                }
+            }
+        }
+
+        // Close the directory handle
+        closedir($dir_handle);
+    } else {
+        echo "Failed to open directory!";
+    }
+
+    return $awardDetails;
+}
 ?>
