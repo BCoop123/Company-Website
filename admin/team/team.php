@@ -21,7 +21,7 @@ function createTable($headings, $files) {
                     foreach ($files as $key => $file) {
                         echo '
                             <tr>
-                                <td><a href="./edit.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
+                                <td><a href="./detail.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
                                 <td>' . $file[1] . '</td>
                                 <td>' . $file[2] . '</td>
                             </tr>

@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 <?php
 // Creates a table that contains file names and contents of a folder
 function createTable($headings, $files) {
@@ -124,4 +122,3 @@ function getContactDetails($contactsFilePath, $contactFile) {
 
 
 ?>
->>>>>>> Stashed changes

@@ -21,7 +21,7 @@ function createTable($headings, $files) {
                     foreach ($files as $key => $file) {
                         echo '
                             <tr>
-                                <td><a href="./edit.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
+                                <td><a href="./detail.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
                                 <td>' . $file[1] . '</td>
                             </tr>
                         ';
@@ -60,8 +60,6 @@ function getPageInfo($dir_path) {
     return $files;
 }
 
-<<<<<<< Updated upstream
-=======
 // Function to get the first few words from a text file
 function getFirstWordsFromFile($txtFileName, $numWords = 10) {
     $content = file_get_contents($txtFileName);
@@ -82,5 +80,4 @@ function getPageContent($dir_path, $fileName) {
     }
 }
 
->>>>>>> Stashed changes
 ?>
