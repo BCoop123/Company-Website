@@ -7,7 +7,6 @@ $productsFile = "../../data/products/products.json";
 
 // Function to add a new product to the JSON file
 function addNewProduct($productsFile, $name, $description, $eduSuites, $advModules, $therapeuticLandscapes) {
-    // Read existing JSON data from the file
     $existingData = file_get_contents($productsFile);
     $products = json_decode($existingData, true); // true for associative array
 
@@ -15,27 +14,6 @@ function addNewProduct($productsFile, $name, $description, $eduSuites, $advModul
         $products = []; // Initialize as an empty array if the file is empty or invalid
     }
 
-    // Check if the product already exists in the array
-    foreach ($products as $key => $product) {
-        if ($product["name"] === $name) {
-            // Update the product's information
-            $products[$key]["description"] = $description;
-            $products[$key]["applications"]["Educational Suites"] = $eduSuites;
-            $products[$key]["applications"]["Adventure Modules"] = $advModules;
-            $products[$key]["applications"]["Therapeutic Landscapes"] = $therapeuticLandscapes;
-
-            // Encode the updated array as JSON
-            $jsonContent = json_encode($products, JSON_PRETTY_PRINT);
-
-            // Write the updated JSON data back to the file
-            if (file_put_contents($productsFile, $jsonContent) !== false) {
-                return true; // Return true on success
-            }
-            return false; // Return false on failure
-        }
-    }
-
-    // If the product doesn't exist, add it as a new product
     $newProduct = [
         "name" => $name,
         "description" => $description,
@@ -45,12 +23,10 @@ function addNewProduct($productsFile, $name, $description, $eduSuites, $advModul
             "Therapeutic Landscapes" => $therapeuticLandscapes
         ]
     ];
+
     $products[] = $newProduct;
 
-    // Encode the updated array as JSON
     $jsonContent = json_encode($products, JSON_PRETTY_PRINT);
-
-    // Write the updated JSON data back to the file
     if (file_put_contents($productsFile, $jsonContent) !== false) {
         return true; // Return true on success
     }
@@ -59,36 +35,17 @@ function addNewProduct($productsFile, $name, $description, $eduSuites, $advModul
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get user input from the form
     $productName = $_POST["product_name"];
     $productDescription = $_POST["product_description"];
     $eduSuites = $_POST["edu_suites"];
     $advModules = $_POST["adv_modules"];
     $therapeuticLandscapes = $_POST["therapeutic_landscapes"];
-    // Add or edit the product in the JSON file
+
     if (addNewProduct($productsFile, $productName, $productDescription, $eduSuites, $advModules, $therapeuticLandscapes)) {
-        // Redirect to the edit page for the product
-        header("Location: edit.php?name=" . urlencode($productName));
+        header("Location: index.php");
         exit();
     } else {
-        echo "Failed to add/edit the product in the database.";
-    }
-}
-
-// Retrieve the product's current information for editing
-$productToEdit = null;
-if (isset($_GET["name"])) {
-    $productNameToEdit = $_GET["name"];
-    $existingData = file_get_contents($productsFile);
-    $products = json_decode($existingData, true);
-
-    if (is_array($products)) {
-        foreach ($products as $product) {
-            if ($product["name"] === $productNameToEdit) {
-                $productToEdit = $product;
-                break;
-            }
-        }
+        echo "Failed to add the product.";
     }
 }
 ?>
@@ -99,7 +56,7 @@ if (isset($_GET["name"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create/Edit Product</title>
+    <title>Create New Product</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 

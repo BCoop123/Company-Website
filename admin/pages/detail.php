@@ -16,6 +16,7 @@ if (isset($_GET['file'])) {
     exit;
 }
 
+
 // Check if the 'delete' parameter is set in the URL
 if (isset($_GET['delete'])) {
     $deleteFileName = $_GET['delete'];
@@ -35,6 +36,7 @@ if (isset($_GET['delete'])) {
         echo "File '" . $deleteFileName . "' not found.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +54,10 @@ if (isset($_GET['delete'])) {
         <a href="edit.php?file=<?= $_GET["file"] ?>" class="btn btn-primary button-margin">Edit</a>
     </div>
     <div class="text-center mt-4">
+
         <a href="detail.php?file=<?= $_GET["file"] ?>&delete=<?= $_GET["file"] ?>" class="btn btn-danger button-margin">Delete</a>
+        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+
     </div>
     <div class="container">
         <h1><?php echo $fileName; ?> Details</h1>
