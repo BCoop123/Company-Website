@@ -1,6 +1,6 @@
 [
     {
-        "name": "Celestial VR™",
+        "name": "Celestial VR\u2122",
         "description": "A virtual reality platform offering hyper-realistic experiences, from serene walks on Mars to diving into the Marianas Trench, all from the comfort of your living room.",
         "applications": {
             "Educational Suites": "Users can explore Mars, dive deep into the ocean, or understand the wonders of space.",
@@ -9,7 +9,7 @@
         }
     },
     {
-        "name": "Luminara Glasses™",
+        "name": "Luminara Glasses\u2122",
         "description": "Lightweight AR glasses that overlay digital information on the real world. Users can seamlessly interact with virtual objects, get real-time data overlays, or even project a movie onto any wall.",
         "applications": {
             "Educational Suites": "Visualize ancient ruins, complex molecular structures, or projected lectures.",
@@ -18,8 +18,8 @@
         }
     },
     {
-        "name": "QuantNet™",
-        "description": "The world’s first accessible quantum computer service for businesses. It promises computations at speeds previously deemed impossible, ideal for industries like finance, healthcare, and space exploration.",
+        "name": "QuantNet\u2122",
+        "description": "The world\u2019s first accessible quantum computer service for businesses. It promises computations at speeds previously deemed impossible, ideal for industries like finance, healthcare, and space exploration.",
         "applications": {
             "Educational Suites": "Understand quantum physics with visual simulations, explore quantum algorithms, or experiment with virtual quantum circuits.",
             "Adventure Modules": "Experience quantum realms, visualize superposition, or traverse quantum entanglements.",
@@ -27,12 +27,21 @@
         }
     },
     {
-        "name": "Nebula Academy™",
+        "name": "Nebula Academy\u2122",
         "description": "A global online institution teaching the next generation about AR, VR, and quantum computing. It offers courses from beginner to advanced levels and provides certification recognized worldwide.",
         "applications": {
             "Educational Suites": "Courses on AR, VR, and quantum computing fundamentals to advanced topics.",
             "Adventure Modules": "Hands-on projects on AR games, VR simulations, or quantum algorithms.",
             "Therapeutic Landscapes": "Virtual campuses, AR-enhanced relaxation spaces, or quantum-inspired visual relaxation modules."
+        }
+    },
+    {
+        "name": "Flex Tape",
+        "description": "sdfdsfsdfsdfdsfdfds",
+        "applications": {
+            "Educational Suites": "dsfdsf",
+            "Adventure Modules": "sdfs",
+            "Therapeutic Landscapes": "sdsfsdf"
         }
     }
 ]

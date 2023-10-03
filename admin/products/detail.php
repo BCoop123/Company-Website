@@ -1,11 +1,10 @@
 <?php
-$dir_path = "../../data/products.json";
 require_once('./products.php');
 
-// Check if the 'file' parameter is set in the URL
-if (isset($_GET['file'])) {
-    $fileName = $_GET['file'];
-    $productInfo = getProductDetails($fileName);
+// Check if the 'name' parameter is set in the URL
+if (isset($_GET['name'])) {
+    $productName = $_GET['name'];
+    $productInfo = getProductDetails($productName);
 
     if (!$productInfo) {
         echo "Product not found.";
@@ -23,19 +22,20 @@ if (isset($_GET['file'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $fileName; ?> Details</title>
+    <title><?php echo $productName; ?> Details</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="text-center mt-4">
-        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+        <a href="edit.php?name=<?= urlencode($productName) ?>" class="btn btn-primary button-margin">Edit</a>
     </div>
     <div class="text-center mt-4">
-        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+        <!-- Assuming you will use 'name' to identify the product for deletion too -->
+        <a href="delete.php?name=<?= urlencode($productName) ?>" class="btn btn-danger button-margin">Delete</a>
     </div>
     <div class="container">
-        <h1><?php echo $fileName; ?> Details</h1>
+        <h1><?php echo $productName; ?> Details</h1>
         <table class="table">
             <thead>
                 <tr>
