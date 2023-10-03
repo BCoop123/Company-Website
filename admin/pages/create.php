@@ -5,21 +5,6 @@ require_once('./pages.php');
 // Define the path to the pages TXT files directory
 $pagesDir = "../../data/pages";
 
-// Function to add a new page to the TXT files
-function addNewPage($pagesDir, $filename, $contents) {
-    // Check if both the filename and contents are not empty
-    if (!empty($filename) && !empty($contents)) {
-        // Combine the directory path and filename
-        $file_path = $pagesDir . "/" . $filename;
-
-        // Write the contents to the file
-        if (file_put_contents($file_path, $contents) !== false) {
-            return true; // Return true on success
-        }
-    }
-    return false; // Return false on failure or empty input
-}
-
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get user input from the form
