@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Add the new page to the TXT files
     if (addNewPage($pagesDir, $pageFilename, $pageContents)) {
         // Redirect to the edit page for the newly created page
-        header("Location: edit.php?file=" . urlencode($pageFilename));
+        header("Location: detail.php?file=" . urlencode($pageFilename));
         exit();
     } else {
         echo "Failed to add the page to the database.";

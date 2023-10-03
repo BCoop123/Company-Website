@@ -130,8 +130,9 @@ function addNewPage($pagesDir, $filename, $contents) {
 function deleteFile($txtFileName) {
     // Check if the file exists before trying to delete
     if (file_exists($txtFileName)) {
-        unlink($txtFileName);
+        return unlink($txtFileName); // Returns true if file deletion is successful, false otherwise
     }
+    return false; // Return false if file doesn't exist
 }
 
 ?>
