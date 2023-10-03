@@ -3,13 +3,13 @@
         "name": "John Doe",
         "email": "jdoe@gmail.com",
         "subject": "This site is great!",
-        "contacts": "Hi"
+        "comments": "Hi"
     },
     {
         "name": "Bill Doe",
         "email": "bdoe@gmail.com",
         "subject": "This site is a really great!",
-        "contacts": "Hi there"
+        "comments": "Hi there"
     },
     {
         "name": "Brandon",
@@ -46,5 +46,11 @@
         "email": "brandoncooper859@gmail.com",
         "subject": "ttttttttttttt",
         "comments": "tttttttttt"
+    },
+    {
+        "name": "bbbbbbbbbbbbb",
+        "email": "brandoncooper859@gmail.com",
+        "subject": "bbbbbbbbbbbb",
+        "comments": "bbbbbb"
     }
 ]
