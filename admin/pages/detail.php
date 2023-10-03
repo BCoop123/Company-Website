@@ -15,6 +15,28 @@ if (isset($_GET['file'])) {
     echo "No page specified.";
     exit;
 }
+
+
+// Check if the 'delete' parameter is set in the URL
+if (isset($_GET['delete'])) {
+    $deleteFileName = $_GET['delete'];
+
+    // Construct the full path to the file to be deleted
+    $deleteFilePath = $dir_path . "/" . $deleteFileName;
+
+    // Check if the file exists and is a file (not a directory)
+    if (is_file($deleteFilePath)) {
+        // Attempt to delete the file
+        if (unlink($deleteFilePath)) {
+            echo "File '" . $deleteFileName . "' has been deleted.";
+        } else {
+            echo "Failed to delete file '" . $deleteFileName . "'.";
+        }
+    } else {
+        echo "File '" . $deleteFileName . "' not found.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +54,10 @@ if (isset($_GET['file'])) {
         <a href="edit.php?file=<?= $_GET["file"] ?>" class="btn btn-primary button-margin">Edit</a>
     </div>
     <div class="text-center mt-4">
+
+        <a href="detail.php?file=<?= $_GET["file"] ?>&delete=<?= $_GET["file"] ?>" class="btn btn-danger button-margin">Delete</a>
         <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+
     </div>
     <div class="container">
         <h1><?php echo $fileName; ?> Details</h1>
