@@ -68,34 +68,35 @@ function getAwardInfo($dir_path) {
     }
     return $productsArray;
 }
-function deleteAwardFromCSV($csvFileName, $awardIndex) {
+
+function deleteAwardFromCSV($csvFileName, $awardName) {
     // Check if the CSV file exists
     if (file_exists($csvFileName)) {
         // Read the CSV file into an array
         $csvData = file($csvFileName);
+        $newCsvData = [];
 
-        // Check if the award index is within the valid range
-        if ($awardIndex >= 0 && $awardIndex < count($csvData)) {
-            // Remove the line at the specified index
-            unset($csvData[$awardIndex]);
-
-            // Re-index the array to remove gaps
-            $csvData = array_values($csvData);
-
-            // Write the updated data back to the CSV file
-            file_put_contents($csvFileName, implode('', $csvData));
-
-            // Return true to indicate successful deletion
-            return true;
-        } else {
-            // Invalid award index
-            return false;
+        foreach ($csvData as $line) {
+            // Split the CSV line into columns
+            $columns = str_getcsv($line);
+            
+            // Check if the first column matches the award name
+            if (trim($columns[0], '"') !== $awardName) {
+                $newCsvData[] = $line;  // Store lines that don't match the award name
+            }
         }
+
+        // Write the updated data back to the CSV file
+        file_put_contents($csvFileName, implode('', $newCsvData));
+
+        // Return true if the new data is shorter than the original data, meaning an award was deleted
+        return count($newCsvData) < count($csvData);
     } else {
         // CSV file does not exist
         return false;
     }
 }
+
 function getAwardDetails($csv_path, $awardName) {
     $awardDetails = null;
 
@@ -113,4 +114,98 @@ function getAwardDetails($csv_path, $awardName) {
 
     return $awardDetails;
 }
+
+function addOrUpdateAward($csvFileName, $awardName, $awardDescription) {
+    // The array that will contain all awards from the CSV file
+    $awardsArray = [];
+
+    // Check if the CSV file exists
+    if (file_exists($csvFileName)) {
+        // Read the CSV file into an array
+        $csvData = file($csvFileName);
+
+        foreach ($csvData as $line) {
+            $awardsArray[] = str_getcsv($line);
+        }
+
+        // Flag to check if an update is performed
+        $updated = false;
+
+        // Search for an existing award with the same name and update it if found
+        foreach ($awardsArray as &$award) {
+            if ($award[0] === $awardName) {
+                $award[1] = $awardDescription;
+                $updated = true;
+                break;
+            }
+        }
+
+        // If no award was found, add a new one
+        if (!$updated) {
+            $awardsArray[] = [$awardName, $awardDescription];
+        }
+
+        // Convert the awards array back to CSV format
+        $csvOutput = "";
+        foreach ($awardsArray as $award) {
+            $csvOutput .= '"' . implode('","', $award) . '"' . PHP_EOL;
+        }
+
+        // Write the CSV data back to the file
+        return file_put_contents($csvFileName, $csvOutput) !== false;
+    } else {
+        // CSV file does not exist
+        return false;
+    }
+}
+
+function deleteAward($csvFileName, $awardName) {
+    $awardsArray = [];
+
+    if (file_exists($csvFileName)) {
+        $csvData = file($csvFileName);
+
+        foreach ($csvData as $line) {
+            $awardsArray[] = str_getcsv($line);
+        }
+
+        foreach ($awardsArray as $key => $award) {
+            if ($award[0] === $awardName) {
+                unset($awardsArray[$key]);
+                break;
+            }
+        }
+
+        $csvOutput = "";
+        foreach ($awardsArray as $award) {
+            $csvOutput .= '"' . implode('","', $award) . '"' . PHP_EOL;
+        }
+
+        return file_put_contents($csvFileName, $csvOutput) !== false;
+    } else {
+        return false;
+    }
+}
+
+function addNewAward($awardsFile, $name, $description) {
+    // Open the CSV file for writing (append mode)
+    $file = fopen($awardsFile, "a");
+
+    // Check if the file was opened successfully
+    if ($file) {
+        // Prepare the data as a CSV line
+        $newAward = '"' . $name . '","' . $description . '"';
+        
+        // Write the new award data to the file
+        fwrite($file, $newAward . PHP_EOL);
+
+        // Close the file
+        fclose($file);
+
+        return true; // Return true on success
+    } else {
+        return false; // Return false on failure
+    }
+}
+
 ?>
