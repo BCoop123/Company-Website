@@ -44,7 +44,7 @@ if (isset($_GET['file'])) {
                     <td><?php echo $contactDetails['name']; ?></td>
                     <td><?php echo $contactDetails['email']; ?></td>
                     <td><?php echo $contactDetails['subject']; ?></td>
-                    <td><?php echo $contactDetails['message']; ?></td>
+                    <td><?php echo $contactDetails['comments']; ?></td>
                 </tr>
             </tbody>
         </table>
