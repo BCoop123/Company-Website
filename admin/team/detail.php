@@ -10,17 +10,16 @@
 
 <body>
     <div class="text-center mt-4">
-        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+        <a href="edit.php?id=<?= $_GET['id'] ?>" class="btn btn-primary button-margin">Edit</a>
     </div>
     <div class="text-center mt-4">
-        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+        <a href="delete.php?id=<?= $_GET['id'] ?>" class="btn btn-danger button-margin">Delete</a>
     </div>
     <div class="container">
         <?php
-            // Check if a file is specified in the URL
-            if (isset($_GET['file'])) {
-                $teamName = $_GET['file'];
-                $teamDetails = getTeamDetails($teamName);
+            // Check if an ID is specified in the URL
+            if (isset($_GET['id'])) {
+                $teamDetails = getTeamDetails($_GET['id']);
 
                 if ($teamDetails) {
                     echo '<h2>' . $teamDetails['name'] . '</h2>';
@@ -45,21 +44,17 @@
 </html>
 
 <?php
-function getTeamDetails($teamName) {
+function getTeamDetails($id) {
     $jsonFile = "../../data/team/team.json";
 
     if (file_exists($jsonFile)) {
         $teamData = json_decode(file_get_contents($jsonFile), true);
 
-        foreach ($teamData as $member) {
-            if ($member['name'] === $teamName) {
-                return $member;
-            }
-        }
-    } else {
-        echo "Team file not found.";
+        // Directly get the member using the key
+        return isset($teamData[$id]) ? $teamData[$id] : null;
     }
 
+    echo "Team file not found.";
     return null;
 }
 ?>
