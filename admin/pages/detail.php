@@ -56,7 +56,6 @@ if (isset($_GET['delete'])) {
     <div class="text-center mt-4">
 
         <a href="detail.php?file=<?= $_GET["file"] ?>&delete=<?= $_GET["file"] ?>" class="btn btn-danger button-margin">Delete</a>
-        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
 
     </div>
     <div class="container">
