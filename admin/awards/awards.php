@@ -1,6 +1,37 @@
 <?php
+
+//class for Award
+class Award {
+    //specify private variables
+    private $awardName;
+    private $awardDesc;
+
+    //constructor
+    public function __construct($awardName, $awardDesc) {
+        $this -> setName($awardName);
+        $this -> setDesc($awardDesc);
+    }
+
+    public function setName($name) {
+        $this -> awardName = $name;
+    }
+
+    public function setDesc($desc) {
+        $this -> awardDesc = $desc;
+    }
+
+    public function printAward() {
+        echo '
+        <tr>
+            <td><a href="./detail.php?award=' . urlencode($this->awardName) . '">' . $this->awardName . '</a></td>
+            <td>' . $this->awardDesc . '</td>
+        </tr>
+        ';
+    }
+}
+
 // Creates a table that contains file names and contents of a folder
-function createTable($headings, $files) {
+function createTable($headings, $awards) {
     echo '
     <div class="container-fluid">
         <!-- Bootstrap table -->
@@ -18,13 +49,8 @@ function createTable($headings, $files) {
             </thead>
             <tbody>
     ';
-    foreach ($files as $key => $file) {
-        echo '
-            <tr>
-                <td><a href="./detail.php?award=' . urlencode($file[0]) . '">' . $file[0] . '</a></td>
-                <td>' . $file[1] . '</td>
-            </tr>
-        ';
+    foreach ($awards as $key => $award) {
+        $award->printAward();
     };
     echo '
             </tbody>
@@ -34,7 +60,7 @@ function createTable($headings, $files) {
 }
 
 function getAwardInfo($dir_path) {
-    $productsArray = [];
+    $awardsArray = [];
 
     // Open the directory
     $dir_handle = opendir($dir_path);
@@ -50,11 +76,8 @@ function getAwardInfo($dir_path) {
                 if (($handle = fopen($file_path, "r")) !== FALSE) {
 
                     // Read each line of CSV and store the data
-                    while (($product = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                        $productsArray[] = [
-                            $product[0],
-                            $product[1]
-                        ];
+                    while (($award = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                        $awardsArray[] = new Award($award[0], $award[1]);
                     }
                     fclose($handle);
                 }
@@ -66,7 +89,7 @@ function getAwardInfo($dir_path) {
     } else {
         echo "Failed to open directory!";
     }
-    return $productsArray;
+    return $awardsArray;
 }
 
 function deleteAwardFromCSV($csvFileName, $awardName) {
@@ -155,34 +178,6 @@ function addOrUpdateAward($csvFileName, $awardName, $awardDescription) {
         return file_put_contents($csvFileName, $csvOutput) !== false;
     } else {
         // CSV file does not exist
-        return false;
-    }
-}
-
-function deleteAward($csvFileName, $awardName) {
-    $awardsArray = [];
-
-    if (file_exists($csvFileName)) {
-        $csvData = file($csvFileName);
-
-        foreach ($csvData as $line) {
-            $awardsArray[] = str_getcsv($line);
-        }
-
-        foreach ($awardsArray as $key => $award) {
-            if ($award[0] === $awardName) {
-                unset($awardsArray[$key]);
-                break;
-            }
-        }
-
-        $csvOutput = "";
-        foreach ($awardsArray as $award) {
-            $csvOutput .= '"' . implode('","', $award) . '"' . PHP_EOL;
-        }
-
-        return file_put_contents($csvFileName, $csvOutput) !== false;
-    } else {
         return false;
     }
 }
