@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $awardName = $_POST["award_name"];
     $awardDescription = $_POST["award_description"];
     // Add the new award to the CSV file
-    if (addNewAward($awardsFile, $awardName, $awardDescription)) {
+    if (Awards::createAward($awardsFile, $awardName, $awardDescription)) {
         // Redirect to the edit page for the newly created award
         header("Location: edit.php?file=" . urlencode($awardName));
         exit();

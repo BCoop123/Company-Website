@@ -13,7 +13,7 @@ if (!isset($_GET['award'])) {
 }
 
 $awardName = $_GET['award'];
-$awardDetails = getAwardDetails($awardsFile, $awardName);
+$awardDetails = Awards::readAward($awardsFile, $awardName);
 
 if (!$awardDetails) {
     echo "Award not found.";
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $updatedAwardDescription = $_POST["award_description"];
     
     // Update the award in the CSV file
-    if (deleteAwardFromCSV($awardsFile, $awardName) && addNewAward($awardsFile, $updatedAwardName, $updatedAwardDescription)) {
+    if (Awards::updateAward($awardsFile, $awardName, $updatedAwardName, $updatedAwardDescription)) {
         // Redirect to the detail page for the updated award
         header("Location: detail.php?award=" . urlencode($updatedAwardName));
         exit();

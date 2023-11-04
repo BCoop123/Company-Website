@@ -1,6 +1,5 @@
 <?php
 $dir_path = "../../data/awards";
-$headings = ["Award", "Description"];
 require_once('./awards.php');
 ?>
 
@@ -27,7 +26,7 @@ require_once('./awards.php');
     </div>
 
     <?php
-    createTable($headings, getAwardInfo($dir_path))
+    Awards::displayAwards($dir_path)
     ?>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

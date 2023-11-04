@@ -11,7 +11,7 @@ if (isset($_GET['award'])) {
 
     // Check if the form is submitted to delete the award
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
-        if (deleteAwardFromCSV($awardsFile, $awardName)) {  // Modify this line to use the appropriate function and arguments to delete the award
+        if (Awards::deleteAward($awardsFile, $awardName)) {  // Modify this line to use the appropriate function and arguments to delete the award
             header("Location: index.php?message=deleted");
             exit();
         } else {

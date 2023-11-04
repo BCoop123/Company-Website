@@ -5,7 +5,7 @@ require_once('./awards.php');
 // Check if the 'award' parameter is set in the URL
 if (isset($_GET['award'])) {
     $awardName = $_GET['award'];
-    $awardDetails = getAwardDetails($dir_path, $awardName);
+    $awardDetails = Awards::readAward($dir_path, $awardName);
 
     if (!$awardDetails) {
         echo "Award not found.";
