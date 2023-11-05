@@ -1,12 +1,17 @@
 <?php
+<<<<<<< Updated upstream
 // Get the parameters from the URL
 $txtFileName = isset($_GET['file']) ? $_GET['file'] : '';
+=======
+require_once('./pages.php');
+>>>>>>> Stashed changes
 
 // Check if the parameters are valid
 if (!empty($txtFileName)) {
     // Read the first few words from the text file
     $firstWords = getFirstWordsFromFile($txtFileName);
 
+<<<<<<< Updated upstream
     // Display the confirmation dialog
     echo '<html>';
     echo '<head>';
@@ -37,6 +42,19 @@ if (!empty($txtFileName)) {
         // Redirect to the specified page
         header('Location: ../pages');
         exit();
+=======
+if (isset($_GET['file'])) {
+    $fileName = $_GET['file'];
+    $dir_path = '../../data/pages';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
+        if (Pages::deleteFile($dir_path . "/" . $fileName)) {
+            header("Location: index.php?message=deleted");
+            exit();
+        } else {
+            $message = "Failed to delete the page.";
+        }
+>>>>>>> Stashed changes
     }
 } else {
     echo 'Invalid parameters.';
