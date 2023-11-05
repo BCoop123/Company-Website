@@ -5,7 +5,7 @@ require_once('./awards.php');
 // Check if the 'award' parameter is set in the URL
 if (isset($_GET['award'])) {
     $awardName = $_GET['award'];
-    $awardDetails = getAwardDetails($dir_path, $awardName);
+    $awardDetails = Awards::readAward($dir_path, $awardName);
 
     if (!$awardDetails) {
         echo "Award not found.";
@@ -29,10 +29,10 @@ if (isset($_GET['award'])) {
 
 <body>
     <div class="text-center mt-4">
-        <a href="edit.php" class="btn btn-primary button-margin">Edit</a>
+        <a href="edit.php?award=<?php echo urlencode($awardDetails[0]); ?>" class="btn btn-primary button-margin">Edit</a>
     </div>
     <div class="text-center mt-4">
-        <a href="delete.php" class="btn btn-primary button-margin">Delete</a>
+        <a href="delete.php?award=<?php echo urlencode($awardDetails[0]); ?>" class="btn btn-primary button-margin">Delete</a>
     </div>
     <div class="container">
         <h1><?php echo $awardDetails[0]; ?> Details</h1>
@@ -46,7 +46,7 @@ if (isset($_GET['award'])) {
             <tbody>
                 <tr>
                     <td><?php echo $awardDetails[0]; ?></td>
-                    <td><?php echo $awardDetails[1]; // Assuming the second column in your CSV contains the description ?></td>
+                    <td><?php echo $awardDetails[1]; ?></td>
                 </tr>
             </tbody>
         </table>

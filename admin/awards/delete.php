@@ -1,43 +1,61 @@
 <?php
-include('awards.php');
-// Get the parameters from the URL
-$awardIndex = isset($_GET['index']) ? intval($_GET['index']) : -1;
-$csvFileName = isset($_GET['file']) ? $_GET['file'] : '';
-$awardName = isset($_GET['awardName']) ? $_GET['awardName'] : '';
+// Include necessary functions
+require_once('./awards.php');
 
-// Check if the parameters are valid
-if ($awardIndex >= 0 && !empty($csvFileName) && !empty($awardName)) {
-    // Display the confirmation dialog
-    echo '<html>';
-    echo '<head>';
-    echo '<title>Delete Award Confirmation</title>';
-    echo '</head>';
-    echo '<body>';
-    echo '<div style="width: 300px; margin: 50px auto; text-align: center; background-color: #3498db; padding: 20px; color: #fff;">';
-    echo '<h2>Delete Award</h2>';
-    echo '<p>Are you sure you want to delete the award "' . $awardName . '" at index ' . $awardIndex . ' from the CSV file "' . $csvFileName . '"?</p>';
-    echo '<form method="post">';
-    echo '<input type="submit" name="confirm" value="Yes" style="background-color: #e74c3c; color: #fff; padding: 10px 20px; border: none; cursor: pointer;"> ';
-    echo '<input type="submit" name="cancel" value="No" style="background-color: #2ecc71; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">';
-    echo '</form>';
-    echo '</div>';
-    echo '</body>';
-    echo '</html>';
+$message = "";
 
-    // Check if the user clicked the "Yes" button
-    if (isset($_POST['confirm'])) {
-        // Call your delete award function here with $csvFileName and $awardIndex
-        deleteAwardFromCSV($csvFileName, $awardIndex);
+// Check if the 'award' parameter is set in the URL
+if (isset($_GET['award'])) {
+    $awardName = $_GET['award'];
+    $awardsFile = '../../data/awards/awards.csv';
 
-        // Redirect to the specified page
-        header('Location: ../awards');
-        exit();
-    } elseif (isset($_POST['cancel'])) {
-        // Redirect to the specified page
-        header('Location: ../awards');
-        exit();
+    // Check if the form is submitted to delete the award
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
+        if (Awards::deleteAward($awardsFile, $awardName)) {  // Modify this line to use the appropriate function and arguments to delete the award
+            header("Location: index.php?message=deleted");
+            exit();
+        } else {
+            $message = "Failed to delete the award.";
+        }
     }
 } else {
-    echo 'Invalid parameters.';
+    header("Location: index.php");
+    exit();
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Award</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h1>Confirm Deletion</h1>
+        <p>Are you sure you want to delete this award?</p>
+        
+        <?php
+        if ($message) {
+            echo "<div class='alert alert-danger'>$message</div>";
+        }
+        ?>
+
+        <form method="post" action="delete.php?award=<?= urlencode($awardName) ?>">
+            <button type="submit" name="confirm_delete" class="btn btn-danger">Yes, Delete</button>
+            <a href="index.php" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+

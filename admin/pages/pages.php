@@ -126,4 +126,41 @@ function editFile($dir_path, $txtFileName) {
     return $files;
 }
 
+function getPageContent($dir_path, $fileName) {
+    // Construct the full path to the file
+    $file_path = $dir_path . "/" . $fileName;
+
+    // Check if the file exists and is a file (not a directory)
+    if (is_file($file_path)) {
+        // Fetch the contents of the file
+        $pageContent = file_get_contents($file_path);
+        return $pageContent;
+    } else {
+        return null;  // File doesn't exist or is not a valid page
+    }
+}
+
+// Function to add a new page to the TXT files
+function addNewPage($pagesDir, $filename, $contents) {
+    // Check if both the filename and contents are not empty
+    if (!empty($filename) && !empty($contents)) {
+        // Combine the directory path and filename
+        $file_path = $pagesDir . "/" . $filename;
+
+        // Write the contents to the file
+        if (file_put_contents($file_path, $contents) !== false) {
+            return true; // Return true on success
+        }
+    }
+    return false; // Return false on failure or empty input
+}
+
+function deleteFile($txtFileName) {
+    // Check if the file exists before trying to delete
+    if (file_exists($txtFileName)) {
+        return unlink($txtFileName); // Returns true if file deletion is successful, false otherwise
+    }
+    return false; // Return false if file doesn't exist
+}
+
 ?>

@@ -1,116 +1,199 @@
 <?php
-// Creates a table that contains file names and contents of a folder
-function createTable($headings, $files) {
-    echo '
-    <div class="container-fluid">
-        <!-- Bootstrap table -->
-        <table class="table" style="width: 90%; margin: auto;">
-            <thead>
-                <tr>
-    ';
-    foreach ($headings as $key => $heading) {
+
+//================================================================================
+// Utility Class for Awards
+//================================================================================
+
+class Awards {
+
+    //display awards
+    public static function displayAwards($dir_path) {
+        //get array of awards
+        $awards = self::readAwards($dir_path);
+        $headings = ["Award", "Description"];
+
+        //Create the table
         echo '
-            <th>' . $heading . '</th>
+        <div class="container-fluid">
+            <!-- Bootstrap table -->
+            <table class="table" style="width: 90%; margin: auto;">
+                <thead>
+                    <tr>
         ';
-    };
-    echo '
-                </tr>
-            </thead>
-            <tbody>
-    ';
-    foreach ($files as $key => $file) {
+        foreach ($headings as $key => $heading) {
+            echo '
+                <th>' . $heading . '</th>
+            ';
+        };
         echo '
-            <tr>
-                <td><a href="./detail.php?award=' . urlencode($file[0]) . '">' . $file[0] . '</a></td>
-                <td>' . $file[1] . '</td>
-            </tr>
+                    </tr>
+                </thead>
+                <tbody>
         ';
-    };
-    echo '
-            </tbody>
-        </table>
-    </div>
-    ';
-}
+        foreach ($awards as $key => $award) {
+            $award->printAward();
+        };
+        echo '
+                </tbody>
+            </table>
+        </div>
+        ';
+    }
 
-function getAwardInfo($dir_path) {
-    $productsArray = [];
+    //================================================================================
+    // Create
+    //================================================================================
 
-    // Open the directory
-    $dir_handle = opendir($dir_path);
+    public static function createAward($awardsFile, $name, $description) {
+        // Open the CSV file for writing (append mode)
+        $file = fopen($awardsFile, "a");
 
-    if ($dir_handle) {
-        while (false !== ($filename = readdir($dir_handle))) {
-            $file_path = $dir_path . "/" . $filename;
+        // Check if the file was opened successfully
+        if ($file) {
+            // Prepare the data as a CSV line
+            $newAward = '"' . $name . '","' . $description . '"';
+            
+            // Write the new award data to the file
+            fwrite($file, $newAward . PHP_EOL);
 
-            // Check if it's a CSV file and not a directory
-            if (is_file($file_path) && pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {        
+            // Close the file
+            fclose($file);
 
-                // Open the CSV file for reading
-                if (($handle = fopen($file_path, "r")) !== FALSE) {
+            return true; // Return true on success
+        } else {
+            return false; // Return false on failure
+        }
+    }
 
-                    // Read each line of CSV and store the data
-                    while (($product = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                        $productsArray[] = [
-                            $product[0],
-                            $product[1]
-                        ];
+    //================================================================================
+    // Read
+    //================================================================================
+
+    public static function readAwards($dir_path) {
+        $awardsArray = [];
+
+        // Open the directory
+        $dir_handle = opendir($dir_path);
+    
+        if ($dir_handle) {
+            while (false !== ($filename = readdir($dir_handle))) {
+                $file_path = $dir_path . "/" . $filename;
+    
+                // Check if it's a CSV file and not a directory
+                if (is_file($file_path) && pathinfo($file_path, PATHINFO_EXTENSION) === 'csv') {        
+    
+                    // Open the CSV file for reading
+                    if (($handle = fopen($file_path, "r")) !== FALSE) {
+    
+                        // Read each line of CSV and store the data
+                        while (($award = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                            $awardsArray[] = new Award($award[0], $award[1]);
+                        }
+                        fclose($handle);
+                    }
+                }
+            }
+    
+            // Close the directory handle
+            closedir($dir_handle);
+        } else {
+            echo "Failed to open directory!";
+        }
+        return $awardsArray;
+    }
+
+        //read an award with a certian name
+        public static function readAward($dir_path, $awardName) {
+            $awardDetails = null;
+    
+            if (is_file($dir_path) && pathinfo($dir_path, PATHINFO_EXTENSION) === 'csv') {        
+                if (($handle = fopen($dir_path, "r")) !== FALSE) {
+                    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                        if ($data[0] === $awardName) { // Check if the first column matches the award name
+                            $awardDetails = $data;
+                            break;
+                        }
                     }
                     fclose($handle);
                 }
             }
+        
+            return $awardDetails;
         }
 
-        // Close the directory handle
-        closedir($dir_handle);
-    } else {
-        echo "Failed to open directory!";
+    //================================================================================
+    // Update
+    //================================================================================
+
+    public static function updateAward($awardsFile, $awardName, $updatedAwardName, $updatedAwardDescription) {
+        self::deleteAward($awardsFile, $awardName);
+        self::createAward($awardsFile, $updatedAwardName, $updatedAwardDescription);
+        return True;
     }
-    return $productsArray;
-}
-function deleteAwardFromCSV($csvFileName, $awardIndex) {
-    // Check if the CSV file exists
-    if (file_exists($csvFileName)) {
-        // Read the CSV file into an array
-        $csvData = file($csvFileName);
 
-        // Check if the award index is within the valid range
-        if ($awardIndex >= 0 && $awardIndex < count($csvData)) {
-            // Remove the line at the specified index
-            unset($csvData[$awardIndex]);
+    //================================================================================
+    // Delete
+    //================================================================================
 
-            // Re-index the array to remove gaps
-            $csvData = array_values($csvData);
+    public static function deleteAward($csvFileName, $awardName) {
+        // Check if the CSV file exists
+        if (file_exists($csvFileName)) {
+            // Read the CSV file into an array
+            $csvData = file($csvFileName);
+            $newCsvData = [];
 
-            // Write the updated data back to the CSV file
-            file_put_contents($csvFileName, implode('', $csvData));
-
-            // Return true to indicate successful deletion
-            return true;
-        } else {
-            // Invalid award index
-            return false;
-        }
-    } else {
-        // CSV file does not exist
-        return false;
-    }
-}
-function getAwardDetails($csv_path, $awardName) {
-    $awardDetails = null;
-
-    if (is_file($csv_path) && pathinfo($csv_path, PATHINFO_EXTENSION) === 'csv') {        
-        if (($handle = fopen($csv_path, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                if ($data[0] === $awardName) { // Check if the first column matches the award name
-                    $awardDetails = $data;
-                    break;
+            foreach ($csvData as $line) {
+                // Split the CSV line into columns
+                $columns = str_getcsv($line);
+                
+                // Check if the first column matches the award name
+                if (trim($columns[0], '"') !== $awardName) {
+                    $newCsvData[] = $line;  // Store lines that don't match the award name
                 }
             }
-            fclose($handle);
+
+            // Write the updated data back to the CSV file
+            file_put_contents($csvFileName, implode('', $newCsvData));
+
+            // Return true if the new data is shorter than the original data, meaning an award was deleted
+            return count($newCsvData) < count($csvData);
+        } else {
+            // CSV file does not exist
+            return false;
         }
     }
+}
 
-    return $awardDetails;
+//================================================================================
+// Class for Award
+//================================================================================
+
+class Award {
+    //specify private variables
+    private $awardName;
+    private $awardDesc;
+
+    //constructor
+    public function __construct($awardName, $awardDesc) {
+        $this -> setName($awardName);
+        $this -> setDesc($awardDesc);
+    }
+
+    public function setName($name) {
+        $this -> awardName = $name;
+    }
+
+    public function setDesc($desc) {
+        $this -> awardDesc = $desc;
+    }
+
+    public function printAward() {
+        echo '
+        <tr>
+            <td><a href="./detail.php?award=' . urlencode($this->awardName) . '">' . $this->awardName . '</a></td>
+            <td>' . $this->awardDesc . '</td>
+        </tr>
+        ';
+    }
 }
 ?>

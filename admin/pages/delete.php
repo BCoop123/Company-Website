@@ -1,14 +1,24 @@
 <?php
+
+// Include necessary functions
+
 require_once('./pages.php');
 
 $message = "";
 
+// Check if the 'file' parameter is set in the URL
 if (isset($_GET['file'])) {
     $fileName = $_GET['file'];
     $dir_path = '../../data/pages';
 
+
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
         if (Pages::deleteFile($dir_path . "/" . $fileName)) {
+
+    // Check if the form is submitted to delete the page
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
+        if (deleteFile($dir_path . "/" . $fileName)) { // Ensure you have a deletePage function in pages.php
+
             header("Location: index.php?message=deleted");
             exit();
         } else {

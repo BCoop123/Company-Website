@@ -8,6 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pageContents = $_POST["page_contents"];
 
     if (Pages::addNewPage($pagesDir, $pageFilename, $pageContents)) {
+
+    // Add the new page to the TXT files
+    if (addNewPage($pagesDir, $pageFilename, $pageContents)) {
+        // Redirect to the edit page for the newly created page
+
         header("Location: detail.php?file=" . urlencode($pageFilename));
         exit();
     } else {
