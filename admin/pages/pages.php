@@ -1,31 +1,88 @@
 <?php
-// Creates a table that contains file names and contents of a folder
+
+class Pages {
+    // Function to get the file names and file contents of a directory
+    public static function getPageInfo($dir_path) {
+        $files = [];
+
+        $dir_handle = opendir($dir_path);
+
+        if ($dir_handle) {
+            while (false !== ($filename = readdir($dir_handle))) {
+                $file_path = $dir_path . "/" . $filename;
+
+                if (is_file($file_path)) {
+                    $contents = file_get_contents($file_path);
+                    $files[] = [$filename, $contents];
+                }
+            }
+
+            closedir($dir_handle);
+        } else {
+            echo "Failed to open directory!";
+        }
+        return $files;
+    }
+
+    // Function to get the contents of a specific page
+    public static function getPageContent($dir_path, $fileName) {
+        $file_path = $dir_path . "/" . $fileName;
+
+        if (is_file($file_path)) {
+            $pageContent = file_get_contents($file_path);
+            return $pageContent;
+        } else {
+            return null;
+        }
+    }
+
+    // Function to add a new page to the TXT files
+    public static function addNewPage($pagesDir, $filename, $contents) {
+        if (!empty($filename) && !empty($contents)) {
+            $file_path = $pagesDir . "/" . $filename;
+
+            if (file_put_contents($file_path, $contents) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Function to delete a page file
+    public static function deleteFile($txtFileName) {
+        if (file_exists($txtFileName)) {
+            return unlink($txtFileName);
+        }
+        return false;
+    }
+}
+
+// Function to create a table for displaying pages
 function createTable($headings, $files) {
     echo '
     <div class="container-fluid">
-        <!-- Bootstrap table -->
         <table class="table" style="width: 90%; margin: auto;">
             <thead>
                 <tr>
     ';
-                    foreach ($headings as $key => $heading) {
-                        echo '
-                            <th>' . $heading . '</th>
-                        ';
-                    };
+    foreach ($headings as $key => $heading) {
+        echo '
+            <th>' . $heading . '</th>
+        ';
+    }
     echo '
                 </tr>
             </thead>
             <tbody>
     ';
-                    foreach ($files as $key => $file) {
-                        echo '
-                            <tr>
-                                <td><a href="./detail.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
-                                <td>' . $file[1] . '</td>
-                            </tr>
-                        ';
-                    };
+    foreach ($files as $key => $file) {
+        echo '
+            <tr>
+                <td><a href="./detail.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
+                <td>' . $file[1] . '</td>
+            </tr>
+        ';
+    }
     echo '
             </tbody>
         </table>
@@ -33,35 +90,8 @@ function createTable($headings, $files) {
     ';
 }
 
-// Gets the file names and file contents of a directory
-function getPageInfo($dir_path) {
-    $files = [];
-
-    // Open the directory
-    $dir_handle = opendir($dir_path);
-
-    if ($dir_handle) {
-        while (false !== ($filename = readdir($dir_handle))) {
-            $file_path = $dir_path . "/" . $filename;
-
-            // Check if it's a file and not a directory
-            if (is_file($file_path)) {        
-                // Fetch and print the contents of the file
-                $contents = file_get_contents($file_path);
-                $files[] = [$filename, $contents];
-            }
-        }
-
-        // Close the directory handle
-        closedir($dir_handle);
-    } else {
-        echo "Failed to open directory!";
-    }
-    return $files;
-}
 // Function to delete the contents of a text file
 function deleteTxtFileContents($txtFileName) {
-    // Open the text file for writing, which clears its contents
     $file = fopen($txtFileName, 'w');
     fclose($file);
 }
@@ -73,31 +103,29 @@ function getFirstWordsFromFile($txtFileName, $numWords = 10) {
     return implode(' ', array_slice($words, 0, $numWords));
 }
 
+// Function to edit a page file
 function editFile($dir_path, $txtFileName) {
     $files = [];
 
-    // Open the directory
     $dir_handle = opendir($dir_path);
 
     if ($dir_handle) {
         while (false !== ($filename = readdir($dir_handle))) {
             $file_path = $dir_path . "/" . $filename;
 
-            // Check if it's a file and not a directory
-            if (is_file($file_path) and $filename === $txtFileName) {        
-                // Fetch and print the contents of the file
+            if (is_file($file_path) and $filename === $txtFileName) {
                 $contents = file_get_contents($file_path);
                 print($contents);
             }
         }
 
-        // Close the directory handle
         closedir($dir_handle);
     } else {
         echo "Failed to open directory!";
     }
     return $files;
 }
+
 function getPageContent($dir_path, $fileName) {
     // Construct the full path to the file
     $file_path = $dir_path . "/" . $fileName;

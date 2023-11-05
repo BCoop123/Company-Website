@@ -2,10 +2,9 @@
 $dir_path = "../../data/pages";
 require_once('./pages.php');
 
-// Check if the 'file' parameter is set in the URL
 if (isset($_GET['file'])) {
     $fileName = $_GET['file'];
-    $pageContent = getPageContent($dir_path, $fileName);
+    $pageContent = Pages::getPageContent($dir_path, $fileName);
 
     if (!$pageContent) {
         echo "Page not found.";

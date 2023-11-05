@@ -1,18 +1,18 @@
 <?php
-// Include necessary functions and variables
 require_once('./pages.php');
 
-// Define the path to the pages TXT files directory
 $pagesDir = "../../data/pages";
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get user input from the form
     $pageFilename = $_POST["page_filename"];
     $pageContents = $_POST["page_contents"];
+
+    if (Pages::addNewPage($pagesDir, $pageFilename, $pageContents)) {
+
     // Add the new page to the TXT files
     if (addNewPage($pagesDir, $pageFilename, $pageContents)) {
         // Redirect to the edit page for the newly created page
+
         header("Location: detail.php?file=" . urlencode($pageFilename));
         exit();
     } else {

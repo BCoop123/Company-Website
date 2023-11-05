@@ -2,27 +2,21 @@
 $dir_path = "../../data/pages";
 require_once('./pages.php');
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get user input from the form
     $pageFilename = $_POST["page_filename"];
     $pageContents = $_POST["page_contents"];
 
-    // Add or overwrite the file
     if (file_put_contents($dir_path . '/' . $pageFilename, $pageContents) !== false) {
-        // If successful and the new filename is different from the old one, delete the old file
         if (isset($_GET["file"]) and $_GET["file"] != $_POST["page_filename"]) {
-            deleteFile($dir_path . '/' . $_GET["file"]);
+            Pages::deleteFile($dir_path . '/' . $_GET["file"]);
         }
-        
-        //Redirect to the details page
+
         header("Location: detail.php?file=" . urlencode($pageFilename));
         exit();
     } else {
         echo "Failed to save the file.";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
