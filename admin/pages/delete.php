@@ -1,48 +1,8 @@
 <?php
-<<<<<<< Updated upstream
-// Get the parameters from the URL
-$txtFileName = isset($_GET['file']) ? $_GET['file'] : '';
-=======
 require_once('./pages.php');
->>>>>>> Stashed changes
 
-// Check if the parameters are valid
-if (!empty($txtFileName)) {
-    // Read the first few words from the text file
-    $firstWords = getFirstWordsFromFile($txtFileName);
+$message = "";
 
-<<<<<<< Updated upstream
-    // Display the confirmation dialog
-    echo '<html>';
-    echo '<head>';
-    echo '<title>Delete Page Content Confirmation</title>';
-    echo '</head>';
-    echo '<body>';
-    echo '<div style="width: 300px; margin: 50px auto; text-align: center; background-color: #3498db; padding: 20px; color: #fff;">';
-    echo '<h2>Delete Page Content</h2>';
-    echo '<p>Are you sure you want to delete the content of the text file "' . $txtFileName . '"?</p>';
-    echo '<p>First few words: ' . $firstWords . '</p>';
-    echo '<form method="post">';
-    echo '<input type="submit" name="confirm" value="Yes" style="background-color: #e74c3c; color: #fff; padding: 10px 20px; border: none; cursor: pointer;"> ';
-    echo '<input type="submit" name="cancel" value="No" style="background-color: #2ecc71; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">';
-    echo '</form>';
-    echo '</div>';
-    echo '</body>';
-    echo '</html>';
-
-    // Check if the user clicked the "Yes" button
-    if (isset($_POST['confirm'])) {
-        // Call a function to delete the contents of the text file
-        deleteTxtFileContents($txtFileName);
-
-        // Redirect to the specified page
-        header('Location: ../pages');
-        exit();
-    } elseif (isset($_POST['cancel'])) {
-        // Redirect to the specified page
-        header('Location: ../pages');
-        exit();
-=======
 if (isset($_GET['file'])) {
     $fileName = $_GET['file'];
     $dir_path = '../../data/pages';
@@ -54,9 +14,44 @@ if (isset($_GET['file'])) {
         } else {
             $message = "Failed to delete the page.";
         }
->>>>>>> Stashed changes
     }
 } else {
-    echo 'Invalid parameters.';
+    header("Location: index.php");
+    exit();
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h1>Confirm Deletion</h1>
+        <p>Are you sure you want to delete this page?</p>
+        
+        <?php
+        if ($message) {
+            echo "<div class='alert alert-danger'>$message</div>";
+        }
+        ?>
+
+        <form method="post" action="delete.php?file=<?= urlencode($_GET['file']) ?>">
+            <button type="submit" name="confirm_delete" class="btn btn-danger">Yes, Delete</button>
+            <a href="index.php" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
