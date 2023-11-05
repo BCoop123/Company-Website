@@ -10,11 +10,11 @@ $message = "";
 if (isset($_GET['file'])) {
     $fileName = $_GET['file'];
     $dir_path = '../../data/pages';
-
+    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
         if (Pages::deleteFile($dir_path . "/" . $fileName)) {
-
+        }
     // Check if the form is submitted to delete the page
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm_delete'])) {
         if (deleteFile($dir_path . "/" . $fileName)) { // Ensure you have a deletePage function in pages.php
