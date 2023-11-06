@@ -13,7 +13,7 @@ class Pages {
 
                 if (is_file($file_path)) {
                     $contents = file_get_contents($file_path);
-                    $files[] = [$filename, $contents];
+                    $files[] = new Page($filename, $contents);
                 }
             }
 
@@ -76,12 +76,7 @@ function createTable($headings, $files) {
             <tbody>
     ';
     foreach ($files as $key => $file) {
-        echo '
-            <tr>
-                <td><a href="./detail.php?file=' . $file[0] . '">' . $file[0] . '</a></td>
-                <td>' . $file[1] . '</td>
-            </tr>
-        ';
+        $file->printPage();
     }
     echo '
             </tbody>
@@ -162,6 +157,7 @@ function deleteFile($txtFileName) {
     }
     return false; // Return false if file doesn't exist
 }
+
 class Page {
     // Specify private variables
     private $pageName;
@@ -183,8 +179,8 @@ class Page {
 
     public function printPage() {
         echo '
-        <tr>p
-            <td><a href="./detail.php?page=' . urlencode($this->pageName) . '">' . $this->pageName . '</a></td>
+        <tr>
+            <td><a href="./detail.php?file=' . urlencode($this->pageName) . '">' . $this->pageName . '</a></td>
             <td>' . $this->pageContent . '</td>
         </tr>
         ';
