@@ -162,5 +162,35 @@ function deleteFile($txtFileName) {
     }
     return false; // Return false if file doesn't exist
 }
+class Page {
+    // Specify private variables
+    private $pageName;
+    private $pageContent;
+
+    // Constructor
+    public function __construct($pageName, $pageContent) {
+        $this->setName($pageName);
+        $this->setContent($pageContent);
+    }
+
+    public function setName($name) {
+        $this->pageName = $name;
+    }
+
+    public function setContent($content) {
+        $this->pageContent = $content;
+    }
+
+    public function printPage() {
+        echo '
+        <tr>p
+            <td><a href="./detail.php?page=' . urlencode($this->pageName) . '">' . $this->pageName . '</a></td>
+            <td>' . $this->pageContent . '</td>
+        </tr>
+        ';
+    }
+
+}
+
 
 ?>
